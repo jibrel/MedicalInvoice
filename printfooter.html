@@ -11,6 +11,14 @@ footer {
 @page {
   size: A4;
   margin: 11mm 17mm 17mm 17mm;
+  
+}
+
+      
+@page:left{
+  @bottom-left {
+    content: "Page " counter(page) " of " counter(pages);
+  }
 }
 
 @media print {
@@ -22,6 +30,7 @@ footer {
     position: fixed;
     bottom: 0;
   }
+  
 
   .content-block, p {
     page-break-inside: avoid;
