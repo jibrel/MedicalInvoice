@@ -14,6 +14,10 @@ footer {
 }
 
 @media print {
+   .pagebreak {
+        clear: both;
+        page-break-after: always;
+    }
   footer {
     position: fixed;
     bottom: 0;
@@ -76,6 +80,7 @@ footer {
         This is an example document that shows how to have a footer that repeats at the bottom of every page, but also isn't covered up by paragraph text.
       </p>
     </div>
+    <div class="pagebreak">page break </div>
     <div>
       <h3>
         Example Section I
@@ -111,6 +116,7 @@ footer {
         This is an example document that shows how to have a footer that repeats at the bottom of every page, but also isn't covered up by paragraph text.
       </p>
     </div>
+    <div class="pagebreak">page break </div>
     <div>
       <h3>
         Example Section I
