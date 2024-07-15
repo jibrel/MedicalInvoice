@@ -2,10 +2,12 @@
 <html>
   <head>
     <style>
-footer {
+
+@footer {
   font-size: 9px;
   color: #f00;
   text-align: center;
+   content: counter(page);
 }
 
 @page {
@@ -243,7 +245,8 @@ footer {
       </p>
     </div>
     <footer>
-      This is the text that goes at the bottom of every page.
+      <div>This is the text that goes at the bottom of every page.</div>
+      <div align="right">page </div>
     </footer>
   </body>
 </html>
