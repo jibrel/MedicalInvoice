@@ -7,21 +7,28 @@ footer {
   font-size: 9px;
   color: #f00;
   text-align: center;
-   content: counter(page);
+ 
 }
 
 @page {
   size: A4;
   margin: 11mm 17mm 17mm 17mm;
-   @bottom-right {
+  
+  @bottom-right {
      margin: 10pt 0 30pt 0;
      border-top: .25pt solid #666;
-     content: counter(page);
+     content: 'Page: 'counter(page);
      font-size: 9pt;
     
   }
 }
 
+.pages {
+        content: counter(pages)
+    }
+
+      
+      
 /*      
 @page :right{
   @bottom-right {
