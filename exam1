@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRCOG Part 3 Exam UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #timer, #question, #case {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #case {
+            border: 1px solid #ccc;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>MRCOG Part 3 Exam UI</h1>
+    <div id="start-screen">
+        <button id="start-btn">Start Exam</button>
+    </div>
+    <div id="exam-screen" style="display: none;">
+        <div id="timer"></div>
+        <div id="question"></div>
+        <div id="case"></div>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById('start-btn');
+        const startScreen = document.getElementById('start-screen');
+        const examScreen = document.getElementById('exam-screen');
+        const timerDisplay = document.getElementById('timer');
+        const questionDisplay = document.getElementById('question');
+        const caseDisplay = document.getElementById('case');
+
+        const questions = [
+            "Station 1: Candidate Instructions",
+            "Station 2: Candidate Instructions",
+            "Station 3: Candidate Instructions",
+            "Station 4: Candidate Instructions",
+            "Station 5: Candidate Instructions",
+            "Station 6: Candidate Instructions",
+            "Station 7: Candidate Instructions"
+        ];
+
+        const cases = [
+            "Case 1: A 28-year-old primigravida presents at 38 weeks gestation with reduced fetal movements.",
+            "Case 2: A 35-year-old woman attends the gynecology clinic with complaints of heavy menstrual bleeding.",
+            "Case 3: A 42-year-old woman is referred to your clinic with a pelvic mass discovered during a routine check-up.",
+            "Case 4: A 31-year-old woman presents to the early pregnancy unit with vaginal bleeding at 8 weeks gestation.",
+            "Case 5: A 25-year-old woman is brought to A&E with severe abdominal pain and vaginal bleeding.",
+            "Case 6: A 39-year-old woman comes to your clinic requesting sterilization.",
+            "Case 7: A 33-year-old woman presents with secondary infertility. She has a 5-year-old child from a previous relationship."
+        ];
+
+        let currentQuestion = 0;
+        let timer;
+        let timeLeft;
+
+        startBtn.addEventListener('click', startExam);
+
+        function startExam() {
+            startScreen.style.display = 'none';
+            examScreen.style.display = 'block';
+            nextQuestion();
+        }
+
+        function startTimer(seconds, label) {
+            clearInterval(timer);
+            timeLeft = seconds;
+            updateTimerDisplay(label);
+
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay(label);
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    if (label === 'Reading Time') {
+                        startTimer(600, 'Task Time');
+                    } else {
+                        nextQuestion();
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(label) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${label}: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function showQuestion() {
+            questionDisplay.textContent = questions[currentQuestion];
+            caseDisplay.textContent = cases[currentQuestion];
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length) {
+                showQuestion();
+                startTimer(120, 'Reading Time');
+            } else {
+                endExam();
+            }
+            currentQuestion++;
+        }
+
+        function endExam() {
+            examScreen.innerHTML = '<h2>Exam Completed</h2><p>Thank you for taking the MRCOG Part 3 Exam.</p>';
+        }
+    </script>
+</body>
+</html>
