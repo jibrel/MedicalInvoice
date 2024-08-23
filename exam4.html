@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MRCOG Part 3 Exam UI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.1.3/marked.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,7 +26,7 @@
             z-index: 1000;
         }
         #exam-content {
-            margin-top: 60px; /* Adjust based on timer height */
+            margin-top: 60px;
         }
         #task-title, #instructions, #case, #notes {
             margin-bottom: 20px;
@@ -89,36 +90,51 @@
                 instructions: "This is a simulated patient task assessing:\n• Information gathering\n• Communication with patients and families\n• Communication with colleagues\n• Patient safety\n• Applied clinical knowledge",
                 case: `You are an ST5 in the gynaecology clinic. The GP has referred a 34-year-old for counselling on contraception. The referral letter is given below.
 
-Winchester Road Surgery\n
-12 Winchester Road\n
-Southend-on-Sea\n
-SO19 7TY\n
-\n
-Dear Dr,\n
+---
+
+**Winchester Road Surgery**  
+12 Winchester Road  
+Southend-on-Sea  
+SO19 7TY
+
+Dear Dr,
+
 Re: Mrs Heather French, Age 34 years
+
 I saw this woman in my surgery requesting contraception. She wanted to go on the combined oral contraceptive pill. Her history is very complicated and I was not comfortable starting her on this. I would be grateful if you could see and offer her the best option. The family planning services are too far from here, and hence I am referring her to the gynaecology clinic.
-\n
-Yours sincerely\n
-Dr Sanjay Prabhu MBChB, FRCGP`,
-                tasks: [
-                    "Take focused history",
-                    "Initiate any investigations considered appropriate",
-                    "Offer contraceptive advice"
-                ]
+
+Yours sincerely,  
+Dr Sanjay Prabhu MBChB, FRCGP
+
+---
+
+### Tasks:
+1. Take focused history
+2. Initiate any investigations considered appropriate
+3. Offer contraceptive advice`,
             },
             {
                 title: "Task 1: Urodynamics",
                 instructions: "This task assesses the following clinical skills:\n• Patient safety\n• Communication with patients and their relatives\n• Information gathering\n• Applied clinical knowledge",
-                case: `You are a ST5 doctor in the urogynaecology clinic. You are asked to see Amanda Scott, who is a 64-year-old woman. She has been referred by her GP with mixed urinary incontinence which has not responded to supervized pelvic floor muscle training, bladder retraining and Tolterodine. She is para 2 with two spontaneous vaginal deliveries. She has no significant medical or surgical history. Previous examination did not reveal any pelvic organ prolapse.
+                case: `You are a ST5 doctor in the urogynaecology clinic. You are asked to see Amanda Scott, who is a 64-year-old woman. She has been referred by her GP with mixed urinary incontinence which has not responded to supervized pelvic floor muscle training, bladder retraining and Tolterodine. 
 
-A urodynamic study was performed before her clinic appointment (see Fig 19.1). Amanda wishes to know more about the urodynamic findings and management options available to her. You will have ten minutes for the initial discussion. Once you have finished discussion with Amanda the assessor will ask you some questions.
+**Patient Details:**
+- Age: 64 years
+- Parity: Para 2 with two spontaneous vaginal deliveries
+- Medical History: No significant medical or surgical history
+- Previous Examination: Did not reveal any pelvic organ prolapse
 
-You have 10 minutes for this task (+ 2mins initial reading time).`,
-                tasks: [
-                    "Discuss urodynamic findings with Amanda",
-                    "Explain management options",
-                    "Answer assessor's questions"
-                ]
+A urodynamic study was performed before her clinic appointment (see Fig 19.1). Amanda wishes to know more about the urodynamic findings and management options available to her. 
+
+**Your Task:**
+You will have ten minutes for the initial discussion. Once you have finished discussion with Amanda the assessor will ask you some questions.
+
+You have 10 minutes for this task (+ 2mins initial reading time).
+
+### Tasks:
+1. Discuss urodynamic findings with Amanda
+2. Explain management options
+3. Answer assessor's questions`,
             },
             // ... other tasks can be added here
         ];
@@ -164,8 +180,8 @@ You have 10 minutes for this task (+ 2mins initial reading time).`,
         function showTask() {
             const task = tasks[currentTask];
             taskTitleDisplay.textContent = task.title;
-            instructionsDisplay.innerHTML = task.instructions;
-            caseDisplay.innerHTML = task.case + "<br><br>Tasks:<br>" + task.tasks.map(t => "• " + t).join("<br>");
+            instructionsDisplay.innerHTML = marked.parse(task.instructions);
+            caseDisplay.innerHTML = marked.parse(task.case);
             notesArea.value = ''; // Clear notes for new task
         }
 
